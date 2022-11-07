@@ -1,11 +1,158 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <!-- <style type="text/css"></style> -->
+  <style>
+    body {
+      margin: 0;
+      background-color: #cccccc;
+    }
+
+    table {
+      border-spacing: 0;
+    }
+
+    td {
+      padding: 0;
+    }
+
+    img {
+      border: 0;
+    }
+
+    .wrapper {
+      width: 100%;
+      table-layout: fixed;
+      background-color: #cccccc;
+      padding-bottom: 3rem;
+    }
+
+    .main {
+      width: 100%;
+      background-color: white;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 600px;
+      border-spacing: 0;
+      font-family: sans-serif;
+      color: #141414;
+      font-size: 0.85rem;
+    }
+
+    .border-top {
+      background-color: #141414;
+      height: 1rem;
+    }
+
+    .header {
+      background-color: #080461;
+      height: 8rem;
+      width: 100%;
+      padding: 2rem 1rem;
+    }
+
+    .img {
+      width: 100%;
+      height: 100%;
+      -o-object-fit: contain;
+      object-fit: contain;
+    }
+
+    .text {
+      padding: 3rem 1rem;
+    }
+
+    .letter-heading {
+      padding-bottom: 1rem;
+    }
+
+    .name {
+      font-weight: 800;
+    }
+
+    .qr {
+      text-align: center;
+      padding: 3rem 0;
+    }
+
+    .footer {
+      background-color: #ffbf01;
+      min-height: 6rem;
+    }
+  </style>
   <body>
-    <button class="button button--regular">regular</button>
-    <button class="button button--small">small</button>
+    <center class="wrapper">
+      <table class="main">
+        <tr>
+          <td class="border-top"></td>
+        </tr>
+        <tr>
+          <td class="header">
+            <img
+              class="img"
+              src="https://i.ibb.co/qjbLfjY/logo.png"
+              alt="header"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="text">
+            <table>
+              <tr>
+                <td class="letter-heading">
+                  <span class="name">{{First Name}}</span>,
+                </td>
+              </tr>
+              <tr>
+                <td class="letter-body">
+                  In mollit velit exercitation commodo veniam. Laborum ex
+                  laboris consequat consectetur velit anim nulla occaecat ut
+                  occaecat dolore aute excepteur in. Dolore consequat aliqua ut
+                  adipisicing excepteur adipisicing adipisicing sint. Incididunt
+                  eiusmod qui cupidatat aliquip nulla pariatur nostrud deserunt
+                  deserunt ea. Deserunt enim occaecat laboris sint dolore
+                  reprehenderit magna duis sit ut culpa do ut qui.
+                </td>
+              </tr>
+              <tr>
+                <td class="qr">
+                  <img
+                    id="qr"
+                    src="https://chart.googleapis.com/chart?cht=qr&chl={{ID}}&chs=160x160&chld=L|0"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <table class="letter-signature">
+                    <tr>
+                      <td>Sincerely,</td>
+                    </tr>
+                    <tr>
+                      <td class="name">
+                        Department of SAMAHAN Systems Development
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="footer">
+            <img
+              class="img"
+              src="https://i.ibb.co/J57vGKS/footer.png"
+              alt="footer"
+            />
+          </td>
+        </tr>
+      </table>
+    </center>
   </body>
 </html>
