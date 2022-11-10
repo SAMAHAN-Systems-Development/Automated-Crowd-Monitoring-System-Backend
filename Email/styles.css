@@ -41,9 +41,11 @@ img {
 
 .header {
   background-color: #080461;
-  height: 8rem;
+  min-height: 8rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   width: 100%;
-  padding: 2rem 1rem;
 }
 
 .img {
@@ -71,6 +73,9 @@ img {
 }
 
 .footer {
-  background-color: #ffbf01;
-  min-height: 6rem;
+  background-color: #27256a;
+  min-height: 8rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }/*# sourceMappingURL=styles.css.map */
