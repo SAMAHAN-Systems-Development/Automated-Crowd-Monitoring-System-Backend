@@ -21,12 +21,10 @@ export default async function GenerateIDs(auth) {
     // SEARCH HEADER FOR ID COLUMN NUMBER
     var idColumnNumber = undefined;
     for (let index = 0; index < sheetsData[config.HEADER_ROW].length; index++) {
-      if (sheetsData[0][index] === config.ID_HEADER_NAME) {
+      if (sheetsData[config.HEADER_ROW][index] === config.ID_HEADER_NAME) {
         idColumnNumber = index;
         break;
       }
-
-      idColumnNumber = undefined;
     }
 
     // WRITING ID
