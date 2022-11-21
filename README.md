@@ -17,6 +17,7 @@
     ```bash
     node .
     ```
-4. Authorize Google account.
+4. Input choice on ```console```.
+5. Authorize Google account.
 
     Authorization will only be run once. If you wish to re-authorize, delete `token.js` file.
