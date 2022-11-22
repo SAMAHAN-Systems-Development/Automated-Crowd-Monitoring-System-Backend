@@ -33,7 +33,7 @@ export default async function GenerateIDs(auth) {
       if (rowIndex < config.STARTING_ROW - 1) continue;
 
       // IF THERE IS EXISTING ID, SKIP
-      if (sheetsData[rowIndex][idColumnNumber]?.length === config.ID_LENGTH) {
+      if (sheetsData[rowIndex][idColumnNumber].length === config.ID_LENGTH) {
         idArray.push([sheetsData[rowIndex][idColumnNumber]]);
       } else idArray.push([nanoid()]);
     }
