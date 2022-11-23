@@ -80,6 +80,7 @@ export async function MarkPresent(auth, code) {
 
   if (row === null) {
     console.log("Code not found. Code: " + code);
+    return null;
   }
 
   const sheets = google.sheets({ version: "v4", auth });
