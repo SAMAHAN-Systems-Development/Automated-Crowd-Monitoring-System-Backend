@@ -1,6 +1,6 @@
 import { google } from "googleapis";
 import config from "../configuration.js";
-import { Authorize } from "./UtilitiesIndex.js";
+// import { Authorize } from "./UtilitiesIndex.js";
 
 export async function GetEmailAndCode(auth) {
   const sheets = google.sheets({ version: "v4", auth });
@@ -17,6 +17,11 @@ export async function GetEmailAndCode(auth) {
     // SEARCH HEADER FOR ID COLUMN NUMBER
     var idColumnNumber = undefined;
     var emailColumnNumber = undefined;
+    var sentColumnNumber = undefined;
+    var firstNameColumnNumber = undefined;
+    var lastNameColumnNumber = undefined;
+    var middleInitialColumnNumber = undefined;
+
     for (let index = 0; index < sheetsData[config.HEADER_ROW].length; index++) {
       if (sheetsData[config.HEADER_ROW][index] === config.ID_HEADER_NAME) {
         idColumnNumber = index;
@@ -24,6 +29,14 @@ export async function GetEmailAndCode(auth) {
         sheetsData[config.HEADER_ROW][index] === config.EMAIL_HEADER_NAME
       ) {
         emailColumnNumber = index;
+      } else if (sheetsData[config.HEADER_ROW][index] === config.SENT_HEADER_NAME) {
+        sentColumnNumber = index;
+      } else if (sheetsData[config.HEADER_ROW][index] === config.FIRST_NAME_HEADER_NAME) {
+        firstNameColumnNumber = index;
+      } else if (sheetsData[config.HEADER_ROW][index] === config.LAST_NAME_HEADER_NAME) {
+        lastNameColumnNumber = index;
+      } else if (sheetsData[config.HEADER_ROW][index] === config.MIDDLE_NAME_HEADER_NAME) {
+        middleInitialColumnNumber = index;
       }
     }
 
@@ -31,10 +44,28 @@ export async function GetEmailAndCode(auth) {
     for (let x = 0; x < sheetsData.length; x++) {
       if (x === config.HEADER_ROW) continue;
 
-      emailAndCode.push({
+      let row = {
         email: sheetsData[x][emailColumnNumber],
         code: sheetsData[x][idColumnNumber],
-      });
+        sent: sheetsData[x][sentColumnNumber]
+      }
+      
+      // IF FIRST NAME EXISTS
+      if (firstNameColumnNumber !== undefined) {
+        row["firstName"] = sheetsData[x][firstNameColumnNumber];
+      }
+
+      // IF LAST NAME EXISTS
+      if (lastNameColumnNumber !== undefined) {
+        row["lastName"] = sheetsData[x][lastNameColumnNumber];
+      }
+
+      // IF MIDDLE NAME EXISTS
+      if (middleInitialColumnNumber !== undefined) {
+        row["middleInitial"] = sheetsData[x][middleInitialColumnNumber];
+      }
+
+      emailAndCode.push({...row});
     }
 
     console.log("= = = EMAIL AND CODE SUCCESSFULLY RETRIEVED = = =");
