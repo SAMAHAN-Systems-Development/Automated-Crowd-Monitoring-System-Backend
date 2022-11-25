@@ -20,8 +20,9 @@ export async function GetEmailAndCode(auth) {
     for (let index = 0; index < sheetsData[config.HEADER_ROW].length; index++) {
       if (sheetsData[config.HEADER_ROW][index] === config.ID_HEADER_NAME) {
         idColumnNumber = index;
-      }
-      else if (sheetsData[config.HEADER_ROW][index] === config.EMAIL_HEADER_NAME) {
+      } else if (
+        sheetsData[config.HEADER_ROW][index] === config.EMAIL_HEADER_NAME
+      ) {
         emailColumnNumber = index;
       }
     }
@@ -32,8 +33,8 @@ export async function GetEmailAndCode(auth) {
 
       emailAndCode.push({
         email: sheetsData[x][emailColumnNumber],
-        code: sheetsData[x][idColumnNumber]
-      })
+        code: sheetsData[x][idColumnNumber],
+      });
     }
 
     console.log("= = = EMAIL AND CODE SUCCESSFULLY RETRIEVED = = =");
@@ -44,8 +45,6 @@ export async function GetEmailAndCode(auth) {
   }
 }
 
-
-
 async function GetRowFromCode(auth, code) {
   const sheets = google.sheets({ version: "v4", auth });
 
@@ -53,9 +52,9 @@ async function GetRowFromCode(auth, code) {
     // GET COLUMN WITH IDS
     const res = await sheets.spreadsheets.values.get({
       spreadsheetId: config.SPREADSHEET_ID,
-      range: `'${config.SHEET_NAME}'!${config.ID_COLUMN}:${config.ID_COLUMN}` // 'Registration'!E:E 
-    })
-    
+      range: `'${config.SHEET_NAME}'!${config.ID_COLUMN}:${config.ID_COLUMN}`, // 'Registration'!E:E
+    });
+
     const ids = res.data.values;
 
     for (let i = 0; i < ids.length; i++) {
@@ -89,12 +88,12 @@ export async function MarkPresent(auth, code) {
     // GET PARTICIPANT DATA
     const res = await sheets.spreadsheets.values.get({
       spreadsheetId: config.SPREADSHEET_ID,
-      range: `'${config.SHEET_NAME}'!${config.START_COLUMN}${row}:${config.LAST_COLUMN}${row}` // 'Registration'!A1:F1
-    })
+      range: `'${config.SHEET_NAME}'!${config.START_COLUMN}${row}:${config.LAST_COLUMN}${row}`, // 'Registration'!A1:F1
+    });
 
     const data = res.data.values[0];
 
-    let participant = {}
+    let participant = {};
 
     for (let i = 0; i < data.length; i++) {
       let field = config.ROWS[i];
@@ -105,7 +104,7 @@ export async function MarkPresent(auth, code) {
       // Check if participant already entered or just entered now
       if (field === config.ENTERED_HEADER_NAME) {
         // if info is true already, then its not first time
-        participant["FIRST ENTER"] = (info === "TRUE") ? "FALSE" : "TRUE";
+        participant["FIRST ENTER"] = info === "TRUE" ? "FALSE" : "TRUE";
       }
     }
 
@@ -119,7 +118,7 @@ export async function MarkPresent(auth, code) {
       },
     });
 
-    return participant
+    return participant;
   } catch (error) {
     console.log(error);
   }
