@@ -29,13 +29,21 @@ export async function GetEmailAndCode(auth) {
         sheetsData[config.HEADER_ROW][index] === config.EMAIL_HEADER_NAME
       ) {
         emailColumnNumber = index;
-      } else if (sheetsData[config.HEADER_ROW][index] === config.SENT_HEADER_NAME) {
+      } else if (
+        sheetsData[config.HEADER_ROW][index] === config.SENT_HEADER_NAME
+      ) {
         sentColumnNumber = index;
-      } else if (sheetsData[config.HEADER_ROW][index] === config.FIRST_NAME_HEADER_NAME) {
+      } else if (
+        sheetsData[config.HEADER_ROW][index] === config.FIRST_NAME_HEADER_NAME
+      ) {
         firstNameColumnNumber = index;
-      } else if (sheetsData[config.HEADER_ROW][index] === config.LAST_NAME_HEADER_NAME) {
+      } else if (
+        sheetsData[config.HEADER_ROW][index] === config.LAST_NAME_HEADER_NAME
+      ) {
         lastNameColumnNumber = index;
-      } else if (sheetsData[config.HEADER_ROW][index] === config.MIDDLE_NAME_HEADER_NAME) {
+      } else if (
+        sheetsData[config.HEADER_ROW][index] === config.MIDDLE_NAME_HEADER_NAME
+      ) {
         middleInitialColumnNumber = index;
       }
     }
@@ -47,9 +55,9 @@ export async function GetEmailAndCode(auth) {
       let row = {
         email: sheetsData[x][emailColumnNumber],
         code: sheetsData[x][idColumnNumber],
-        sent: sheetsData[x][sentColumnNumber]
-      }
-      
+        sent: sheetsData[x][sentColumnNumber],
+      };
+
       // IF FIRST NAME EXISTS
       if (firstNameColumnNumber !== undefined) {
         row["firstName"] = sheetsData[x][firstNameColumnNumber];
@@ -65,7 +73,7 @@ export async function GetEmailAndCode(auth) {
         row["middleInitial"] = sheetsData[x][middleInitialColumnNumber];
       }
 
-      emailAndCode.push({...row});
+      emailAndCode.push({ ...row });
     }
 
     console.log("= = = EMAIL AND CODE SUCCESSFULLY RETRIEVED = = =");

@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import config from "./config.js";
+import { SetToEmailSent } from "../WriteMethods.js";
 
 export async function SendEmail(auth, EmailAndCode) {
   let transporter = nodemailer.createTransport({
@@ -14,20 +15,23 @@ export async function SendEmail(auth, EmailAndCode) {
     },
   });
   for (let user of EmailAndCode) {
-    //setToSent
-    let mailOptions = {
-      from: `"SysDev" <${config.user}>`,
-      to: user.email,
-      subject: "Test",
-      html: getHTML(user),
-    };
-    await transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log(`Sent to ${user.email}`);
+    if (user.sent == "FALSE") {
+      if (SetToEmailSent(auth, user)) {
+        let mailOptions = {
+          from: `"${config.name}" <${config.user}>`,
+          to: user.email,
+          subject: config.subject,
+          html: getHTML(user),
+        };
+        await transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(`Sent to ${user.email}`);
+          }
+        });
       }
-    });
+    }
   }
 }
 
@@ -54,7 +58,7 @@ function getHTML(user) {
             <table style="border-spacing: 0;">
               <tr>
                 <td class="letter-heading" style="padding: 0; padding-bottom: 1rem;">
-                  <span class="name" style="font-weight: 800;">{{First Name}}</span>,
+                  <span class="name" style="font-weight: 800;">${user.firstName}</span>,
                 </td>
               </tr>
               <tr>
@@ -69,7 +73,7 @@ function getHTML(user) {
                 </td>
               </tr>
               <tr>
-                <td class="qr" style="padding: 3rem 0; text-align: center;" align="center">
+                <td class="qr" style="padding: 0.2rem 0; text-align: center;" align="center">
                   <img id="qr" src=https://chart.googleapis.com/chart?cht=qr&chl=${user.code}&chs=160x160&chld=L|0" style="border: 0;">
                 </td>
               </tr>
@@ -77,11 +81,11 @@ function getHTML(user) {
                 <td style="padding: 0;">
                   <table class="letter-signature" style="border-spacing: 0;">
                     <tr>
-                      <td style="padding: 0;">Sincerely,</td>
+                      <td style="padding: 0;">See you on campus!</td>
                     </tr>
                     <tr>
                       <td class="name" style="padding: 0; font-weight: 800;">
-                        Department of SAMAHAN Systems Development
+                        SAMAHAN Department of Systems Development
                       </td>
                     </tr>
                   </table>

@@ -55,7 +55,7 @@ rl.question(question, (answer) => {
     Authorize()
       .then((auth) =>
         GetEmailAndCode(auth).then((result) =>
-          Authorize().then(SendEmail(auth, result)).catch("ERROR IN SEND MAIL")
+          Authorize().then(SendEmail(auth, result)).catch("ERROR IN SEND EMAIL")
         )
       )
       .catch("ERROR ON GET EMAIL AND CODE IN SEND MAIL");
