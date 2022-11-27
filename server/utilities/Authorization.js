@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import process from "process";
-import { authenticate } from "@google-cloud/local-auth";
+// import { authenticate } from "@google-cloud/local-auth";
 import { google } from "googleapis";
 
 // If modifying these scopes, delete token.json.
@@ -23,7 +23,7 @@ const CREDENTIALS_PATH = path.join(process.cwd(), "credentials.json");
 async function loadSavedCredentialsIfExist() {
   try {
     const content = await fs.readFile(TOKEN_PATH);
-    const credentials = JSON.parse(process.env.CREDENTIALS) || JSON.parse(content);
+    const credentials = JSON.parse(content);
     return google.auth.fromJSON(credentials);
   } catch (err) {
     return null;
@@ -53,17 +53,17 @@ async function saveCredentials(client) {
  * Load or request or authorization to call APIs.
  *
  */
-export default async function authorize() {
-  let client = await loadSavedCredentialsIfExist();
-  if (client) {
-    return client;
-  }
-  client = await authenticate({
-    scopes: SCOPES,
-    keyfilePath: CREDENTIALS_PATH,
-  });
-  if (client.credentials) {
-    await saveCredentials(client);
-  }
-  return client;
-}
+// export default async function authorize() {
+//   let client = await loadSavedCredentialsIfExist();
+//   if (client) {
+//     return client;
+//   }
+//   client = await authenticate({
+//     scopes: SCOPES,
+//     keyfilePath: CREDENTIALS_PATH,
+//   });
+//   if (client.credentials) {
+//     await saveCredentials(client);
+//   }
+//   return client;
+// }
