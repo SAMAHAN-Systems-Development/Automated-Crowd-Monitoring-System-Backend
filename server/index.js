@@ -3,8 +3,10 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import {
-    Authorize
-} from './utilities/Authorize.js';
+    Authorize,
+    GetEmailAndCode,
+    GetUser
+} from './utilities/UtilitiesIndex.js';
 
 const app = express();
 app.set('port', process.env.PORT || 8080);
@@ -27,13 +29,24 @@ app.get('/', async (req, res) => {
     }
 });
 
-app.get('/authorize', async (req, res) => {
+app.get('/users/:id', async (req, res) => {
     try {
         const auth = await Authorize();
-        res.status(200).json({"msg": "Success!", "client": auth});
+        const result = await GetUser(auth, req.params.id);
+
+        // IF USER IS NOT FOUND
+        if (result === null) {
+            throw "UserNotFound";
+        }
+
+        res.status(200).json(result);
     }
     catch (error) {
-        console.log(error)
+        if (error === "UserNotFound") {
+            res.status(404).json({msg: error});
+            return;
+        }
+
         res.status(400).json({"msg": error})
     }
 });

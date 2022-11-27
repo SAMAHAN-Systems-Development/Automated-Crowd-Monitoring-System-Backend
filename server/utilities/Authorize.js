@@ -8,6 +8,7 @@ const SCOPES = [
 ];
 
 export async function Authorize() {
+
     var authDetails = {
         scopes: SCOPES
     }

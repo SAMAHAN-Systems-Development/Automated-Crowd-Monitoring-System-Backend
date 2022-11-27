@@ -1,2 +1,4 @@
+export { GetEmailAndCode, MarkPresent, GetUser } from './ReadMethods.js';
+
 // GOOGLE
-export { default as Authorize } from "./Authorization.js";
+export { Authorize } from "./Authorize.js";

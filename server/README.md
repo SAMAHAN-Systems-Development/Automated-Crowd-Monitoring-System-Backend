@@ -1,3 +1,3 @@
 | ROUTE | DESCRIPTION |
 | ----- | ----------- |
-| `/authorize` | Returns the auth for accessing the Sheets API |
+| `/users/:id` | Returns a row as an object if it matches a code from the sheets |
