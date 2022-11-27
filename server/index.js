@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 
 app.get('/', async (req, res) => {
     try {
-        res.send("Hello, world!")
+        // res.send("Hello, world!")
         res.status(200).json({"msg": "Hello, World!"});
     }
     catch (error) {
@@ -30,7 +30,7 @@ app.get('/', async (req, res) => {
 app.get('/authorize', async (req, res) => {
     try {
         await Authorize()
-        res.send("Authorized!")
+        // res.send("Authorized!")
         res.status(200).json({"msg": "Success!"});
     }
     catch (error) {
