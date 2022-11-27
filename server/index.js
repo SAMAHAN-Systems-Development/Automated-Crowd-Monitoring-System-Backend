@@ -29,7 +29,7 @@ app.get('/', async (req, res) => {
     }
 });
 
-app.get('/users/:id', async (req, res) => {
+app.get('/api/users/:id', async (req, res) => {
     try {
         const auth = await Authorize();
         const result = await GetUser(auth, req.params.id);
