@@ -23,7 +23,7 @@ const CREDENTIALS_PATH = path.join(process.cwd(), "credentials.json");
 async function loadSavedCredentialsIfExist() {
   try {
     const content = await fs.readFile(TOKEN_PATH);
-    const credentials = JSON.parse(content);
+    const credentials = JSON.parse(process.env.CREDENTIALS) || JSON.parse(content);
     return google.auth.fromJSON(credentials);
   } catch (err) {
     return null;
