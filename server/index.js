@@ -30,6 +30,7 @@ app.get('/', async (req, res) => {
 app.get('/authorize', async (req, res) => {
     try {
         await Authorize()
+        res.send("Authorized!")
         res.status(200).json({"msg": "Success!"});
     }
     catch (error) {
