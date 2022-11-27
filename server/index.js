@@ -17,6 +17,15 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.get('/', async (req, res) => {
+    try {
+        res.status(200).json({"msg": "Hello, World!"});
+    }
+    catch (error) {
+        res.status(400).json({"msg": error})
+    }
+});
+
 app.get('/authorize', async (req, res) => {
     try {
         await Authorize()
