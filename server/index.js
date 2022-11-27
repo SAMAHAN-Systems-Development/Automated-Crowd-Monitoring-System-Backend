@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 
 app.get('/', async (req, res) => {
     try {
+        res.send("Hello, world!")
         res.status(200).json({"msg": "Hello, World!"});
     }
     catch (error) {
