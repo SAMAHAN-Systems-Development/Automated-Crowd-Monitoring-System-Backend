@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@google-cloud/local-auth": "^2.1.1",
-    "googleapis": "^109.0.1"
-  }
-}
