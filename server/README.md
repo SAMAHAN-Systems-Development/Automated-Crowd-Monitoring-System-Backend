@@ -28,6 +28,25 @@ GET
 </td>
 <td>
 <code>
+/api/users
+</code>
+</td>
+<td>
+<pre lang='json'>
+{}
+</pre>
+</td>
+<td>
+Returns an array of rows as objects
+</td>
+</tr>
+
+<tr>
+<td>
+GET
+</td>
+<td>
+<code>
 /api/users/:id
 </code>
 </td>

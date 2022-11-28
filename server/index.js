@@ -4,7 +4,7 @@ import cors from 'cors';
 
 import {
     Authorize,
-    GetEmailAndCode,
+    GetUsers,
     GetUser,
     UpdateEnteredStatus
 } from './utilities/UtilitiesIndex.js';
@@ -29,6 +29,18 @@ app.get('/', async (req, res) => {
         res.status(400).json({"msg": error})
     }
 });
+
+app.get('/api/users', async (req, res) => {
+    try {
+        const auth = await Authorize();
+        const users = await GetUsers(auth);
+
+        res.status(200).json(users)
+    }
+    catch (error) {
+        res.status(400).json({"msg": error})
+    }
+})
 
 // Returns row as an object if it matches an id from the sheets
 app.get('/api/users/:id', async (req, res) => {
@@ -66,7 +78,7 @@ app.put('/api/users/:id', async (req, res) => {
             throw "UserNotFound";
         }
 
-        res.status(201).json({
+        res.status(200).json({
             "msg": "Success!",
             "result": result
         })
