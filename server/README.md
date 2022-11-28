@@ -15,7 +15,7 @@ REQUEST
 ROUTE
 </th>
 <th>
-BODY
+REQUIRED BODY PROPERTIES
 </th>
 <th>
 DESCRIPTION
@@ -32,8 +32,8 @@ GET
 </code>
 </td>
 <td>
-<pre lang='json'>
-{}
+<pre>
+none
 </pre>
 </td>
 <td>
@@ -51,8 +51,8 @@ GET
 </code>
 </td>
 <td>
-<pre lang='json'>
-{}
+<pre>
+none
 </pre>
 </td>
 <td>
@@ -70,13 +70,12 @@ PUT
 </code>
 </td>
 <td>
-<pre lang='json'>
-{"entered": boolean}
+<pre>
+entered: boolean
 </pre>
 </td>
 <td>
 Updates entered status if it matches an id from the sheets
 </td>
 </tr>
-
 </table>
