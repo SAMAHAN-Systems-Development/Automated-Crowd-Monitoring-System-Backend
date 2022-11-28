@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+html {
+    font-family: Arial;
+}
+
+body {
+    background-color: var(--color-background);
+}
+
+/* RESPONSIVENESS */
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+/* X-Small devices (portrait phones, less than 576px) */
+@media (max-width: 576px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+/* CONTAINER */
+.container,
+.container-fluid {
+    --bs-gutter-x: 2rem;
+    --bs-gutter-y: 0;
+    width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * 0.5);
+    padding-left: calc(var(--bs-gutter-x) * 0.5);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* SMALL DEVICES */
+@media (min-width: 576px) {
+    .container-sm,
+    .container {
+        max-width: 700px;
+        --bs-gutter-x: 3rem !important;
+    }
+}
+
+/* MEDIUM DEVICES */
+@media (min-width: 768px) {
+    .container {
+        max-width: 850px;
+        --bs-gutter-x: 4rem !important;
+    }
+}
+
+/* LARGE DEVICES */
+@media (min-width: 992px) {
+    .container {
+        max-width: 980px;
+    }
+}
+
+/* EXTRA LARGE DEVICES */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+/* EXTRA EXTRA LARGE DEVICES */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+}
