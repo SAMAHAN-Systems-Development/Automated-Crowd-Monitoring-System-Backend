@@ -5,7 +5,8 @@ import cors from 'cors';
 import {
     Authorize,
     GetEmailAndCode,
-    GetUser
+    GetUser,
+    UpdateEnteredStatus
 } from './utilities/UtilitiesIndex.js';
 
 const app = express();
@@ -18,7 +19,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
+// TODO: UPDATE WELCOME PAGE
 app.get('/', async (req, res) => {
     try {
         // res.send("Hello, world!")
@@ -29,6 +30,7 @@ app.get('/', async (req, res) => {
     }
 });
 
+// Returns row as an object if it matches an id from the sheets
 app.get('/api/users/:id', async (req, res) => {
     try {
         const auth = await Authorize();
@@ -50,6 +52,34 @@ app.get('/api/users/:id', async (req, res) => {
         res.status(400).json({"msg": error})
     }
 });
+
+// Updates entered status if it matches an id from the sheets
+app.put('/api/users/:id', async (req, res) => {
+    const { entered } = req.body;
+    try {
+        const auth = await Authorize();
+
+        const result = await UpdateEnteredStatus(auth, req.params.id, entered);
+
+        // IF USER IS NOT FOUND
+        if (result === null) {
+            throw "UserNotFound";
+        }
+
+        res.status(201).json({
+            "msg": "Success!",
+            "result": result
+        })
+    }
+    catch (error) {
+        if (error === "UserNotFound") {
+            res.status(404).json({msg: error});
+            return;
+        }
+
+        res.status(400).json({"msg": error})
+    }
+})
 
 app.listen(app.get('port'), () => {
     console.log("SERVER ON PORT", app.get('port'));
