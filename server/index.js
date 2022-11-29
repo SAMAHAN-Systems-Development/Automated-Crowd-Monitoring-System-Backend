@@ -89,21 +89,9 @@ app.put("/api/users/:id", async (req, res) => {
   }
 });
 
+// ADDS AN ENTRY TO LOG
 app.post('/api/log', async (req, res) => {
   try {
-    // let headers = [];
-    // for (let header in req.body) {
-    //   headers.push(header);
-    // }
-
-    // let logData = {
-    //   date: new Date()
-    // };
-    
-    // for (let x = 0; x < headers.length; x++) {
-    //   logData[headers[x]] = req.body[headers[x]];
-    // }
-
     const auth = await Authorize();
     const logData = await AddToLog(auth, req.body);
 
