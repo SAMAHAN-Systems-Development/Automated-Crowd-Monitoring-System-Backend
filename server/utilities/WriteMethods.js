@@ -49,3 +49,35 @@ export async function UpdateEnteredStatus(auth, id, entered) {
     return error;
   }
 }
+
+export async function AddToLog(auth, data) {
+  const sheets = google.sheets({ version: "v4", auth });
+  try {
+    let entries = [
+      new Date()
+    ];
+
+    let headers = [];
+    for (let header in data) {
+      headers.push(header);
+    }
+
+    
+    for (let x = 0; x < headers.length; x++) {
+      entries.push(data[headers[x]]);
+    }
+
+    console.log(entries);
+    sheets.spreadsheets.values.append({
+      spreadsheetId: config.SPREADSHEET_ID,
+      range: `'${config.LOG_SHEET_NAME}'`,
+      resource: { values: [[...entries]]},
+      valueInputOption: 'USER_ENTERED'
+    })
+
+    return true;
+  }
+  catch (error) {
+    return error;
+  }
+}

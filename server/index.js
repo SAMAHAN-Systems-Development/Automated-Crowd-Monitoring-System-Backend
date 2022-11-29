@@ -7,6 +7,7 @@ import {
   GetUsers,
   GetUser,
   UpdateEnteredStatus,
+  AddToLog,
 } from "./utilities/UtilitiesIndex.js";
 
 const app = express();
@@ -87,6 +88,33 @@ app.put("/api/users/:id", async (req, res) => {
     res.status(400).json({ msg: error });
   }
 });
+
+app.post('/api/log', async (req, res) => {
+  try {
+    // let headers = [];
+    // for (let header in req.body) {
+    //   headers.push(header);
+    // }
+
+    // let logData = {
+    //   date: new Date()
+    // };
+    
+    // for (let x = 0; x < headers.length; x++) {
+    //   logData[headers[x]] = req.body[headers[x]];
+    // }
+
+    const auth = await Authorize();
+    const logData = await AddToLog(auth, req.body);
+
+    console.log(logData)
+
+    res.status(201).json(logData);
+  }
+  catch (error) {
+    res.status(400).json({ msg: error });
+  }
+})
 
 app.listen(app.get("port"), () => {
   console.log("SERVER ON PORT", app.get("port"));
