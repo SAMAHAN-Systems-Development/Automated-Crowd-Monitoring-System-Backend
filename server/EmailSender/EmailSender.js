@@ -1,36 +1,50 @@
 import nodemailer from "nodemailer";
 import config from "./config.js";
-import { SetToEmailSent } from "../WriteMethods.js";
+import { Authorize, GetUsers } from "../utilities/UtilitiesIndex.js";
 
-export async function SendEmail(auth, EmailAndCode) {
+export async function SendEmail() {
+  const auth = await Authorize();
+  const users = await GetUsers(auth);
   let transporter = nodemailer.createTransport({
     service: config.service,
     auth: {
       type: "OAuth2",
-      user: config.user,
-      clientId: auth._clientId,
-      clientSecret: auth._clientSecret,
-      refreshToken: auth.credentials.refresh_token,
-      accessToken: auth.credentials.access_token,
+      user: auth.email,
+      serviceClient: "116671638268633184842", //d nako ni makita sa auth
+      privateKey: auth.key,
     },
   });
-  for (let user of EmailAndCode) {
-    if (user.sent == "FALSE") {
-      if (SetToEmailSent(auth, user)) {
-        let mailOptions = {
-          from: `"${config.name}" <${config.user}>`,
-          to: user.email,
-          subject: config.subject,
-          html: getHTML(user),
-        };
-        await transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log(`Sent to ${user.email}`);
-          }
-        });
-      }
+  for (let user of users) {
+    if (user[configuration.SENT_HEADER_NAME] == "FALSE") {
+      //   if (SetToEmailSent(auth, user)) {                                  no working SetToEmailSent function yet kay gibago
+      //     let mailOptions = {
+      //       from: `"${config.name}" <${config.user}>`,
+      //       to: user.email,
+      //       subject: config.subject,
+      //       html: getHTML(user),
+      //     };
+      //     await transporter.sendMail(mailOptions, function (error, info) {
+      //       if (error) {
+      //         console.log(error);
+      //       } else {
+      //         console.log(`Sent to ${user.email}`);
+      //       }
+      //     });
+      //   }
+      // }
+      let mailOptions = {
+        from: `"${config.name}" <${config.user}>`,
+        to: user.email,
+        subject: config.subject,
+        html: getHTML(user),
+      };
+      await transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(`Sent to ${user.email}`);
+        }
+      });
     }
   }
 }
@@ -58,7 +72,7 @@ function getHTML(user) {
             <table style="border-spacing: 0;">
               <tr>
                 <td class="letter-heading" style="padding: 0; padding-bottom: 1rem;">
-                  <span class="name" style="font-weight: 800;">${user.firstName}</span>,
+                  <span class="name" style="font-weight: 800;">${user.FIRSTNAME}</span>,
                 </td>
               </tr>
               <tr>
@@ -74,7 +88,10 @@ function getHTML(user) {
               </tr>
               <tr>
                 <td class="qr" style="padding: 0.2rem 0; text-align: center;" align="center">
-                  <img id="qr" src=https://chart.googleapis.com/chart?cht=qr&chl=${user.code}&chs=160x160&chld=L|0" style="border: 0;">
+                  <img id="qr" src=https://chart.googleapis.com/chart?cht=qr&chl=${user["GENERATED ID"]}&chs=160x160&chld=L|0" style="border: 0;">
+                </td>
+                <td>
+                ${user["GENERATED ID"]}
                 </td>
               </tr>
               <tr>
@@ -104,3 +121,5 @@ function getHTML(user) {
   </body>
 </html>`;
 }
+
+SendEmail();

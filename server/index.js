@@ -7,6 +7,7 @@ import {
   GetUsers,
   GetUser,
   UpdateEnteredStatus,
+  Email,
 } from "./utilities/UtilitiesIndex.js";
 
 const app = express();

@@ -1,11 +1,15 @@
 # Automated Crowd Monitoring System REST API
+
 ## HOW TO USE
+
 Send REST API requests to
+
 ```
 sysdev-acms-api.herokuapp.com/{URI}
 ```
 
 ## URIs
+
 <table>
 <tr>
 <th>
