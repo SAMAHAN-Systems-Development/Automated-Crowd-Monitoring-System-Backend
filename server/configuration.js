@@ -15,7 +15,10 @@ const configuration = {
   ENTERED_COLUMN: "F",
 
   SENT_HEADER_NAME: "EMAIL SENT", 
-  SENT_COLUMN: "G"
+  SENT_COLUMN: "G",
+
+  // FOR LOG
+  LOG_SHEET_NAME: "Log"
 };
 
 export default configuration;

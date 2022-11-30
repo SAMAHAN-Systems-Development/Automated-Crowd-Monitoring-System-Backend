@@ -7,6 +7,7 @@ import {
   GetUsers,
   GetUser,
   UpdateEnteredStatus,
+  AddToLog,
   Email,
 } from "./utilities/UtilitiesIndex.js";
 
@@ -85,6 +86,20 @@ app.put("/api/users/:id", async (req, res) => {
       return;
     }
 
+    res.status(400).json({ msg: error });
+  }
+});
+
+// ADDS AN ENTRY TO LOG
+app.post("/api/log", async (req, res) => {
+  try {
+    const auth = await Authorize();
+    const logData = await AddToLog(auth, req.body);
+
+    console.log(logData);
+
+    res.status(201).json(logData);
+  } catch (error) {
     res.status(400).json({ msg: error });
   }
 });

@@ -82,4 +82,23 @@ entered: boolean
 Updates entered status if it matches an id from the sheets
 </td>
 </tr>
+
+<tr>
+<td>
+POST
+</td>
+<td>
+<code>
+/api/log
+</code>
+</td>
+<td>
+<pre>
+id: string | number
+</pre>
+</td>
+<td>
+Adds an entry to log
+</td>
+</tr>
 </table>
