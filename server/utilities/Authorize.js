@@ -2,6 +2,10 @@ import path from "path";
 import { google } from "googleapis";
 
 const CREDENTIALS_PATH = path.join(process.cwd(), "credentials.json");
+const CREDENTIALS_EMAIL_PATH = path.join(
+  process.cwd(),
+  "EmailSender/credentialsEmail.json"
+);
 const SCOPES = [
   "https://www.googleapis.com/auth/spreadsheets",
   "https://mail.google.com/",
