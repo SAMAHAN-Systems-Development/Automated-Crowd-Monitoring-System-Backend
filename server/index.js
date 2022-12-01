@@ -31,9 +31,11 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/api/users", async (req, res) => {
+  const config = req.query;
+
   try {
     const auth = await Authorize();
-    const users = await GetUsers(auth);
+    const users = await GetUsers(auth, config);
 
     res.status(200).json(users);
   } catch (error) {
@@ -43,9 +45,11 @@ app.get("/api/users", async (req, res) => {
 
 // Returns row as an object if it matches an id from the sheets
 app.get("/api/users/:id", async (req, res) => {
+  const config = req.query;
+
   try {
     const auth = await Authorize();
-    const result = await GetUser(auth, req.params.id);
+    const result = await GetUser(auth, config, req.params.id);
 
     // IF USER IS NOT FOUND
     if (result === null) {
@@ -66,10 +70,11 @@ app.get("/api/users/:id", async (req, res) => {
 // Updates entered status if it matches an id from the sheets
 app.put("/api/users/:id", async (req, res) => {
   const { entered } = req.body;
+  const config = req.query;
   try {
     const auth = await Authorize();
 
-    const result = await UpdateEnteredStatus(auth, req.params.id, entered);
+    const result = await UpdateEnteredStatus(auth, config, req.params.id, entered);
 
     // IF USER IS NOT FOUND
     if (result === null) {
@@ -92,11 +97,10 @@ app.put("/api/users/:id", async (req, res) => {
 
 // ADDS AN ENTRY TO LOG
 app.post("/api/log", async (req, res) => {
+  const config = req.query;
   try {
     const auth = await Authorize();
-    const logData = await AddToLog(auth, req.body);
-
-    console.log(logData);
+    const logData = await AddToLog(auth, config, req.body);
 
     res.status(201).json(logData);
   } catch (error) {

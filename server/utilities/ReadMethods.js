@@ -1,7 +1,7 @@
 import { google } from "googleapis";
-import config from "../configuration.js";
+// import config from "../configuration.js";
 
-function findHeaderColumnNumber(sheetsData, headerName) {
+function findHeaderColumnNumber(config, sheetsData, headerName) {
   for (let index = 0; index < sheetsData[config.HEADER_ROW].length; index++) {
     if (sheetsData[config.HEADER_ROW][index] === headerName) {
       return index;
@@ -10,7 +10,7 @@ function findHeaderColumnNumber(sheetsData, headerName) {
   return undefined;
 }
 
-export async function GetUsers(auth) {
+export async function GetUsers(auth, config) {
   const sheets = google.sheets({ version: "v4", auth });
 
   try {
@@ -47,7 +47,7 @@ export async function GetUsers(auth) {
   }
 }
 
-export async function GetUser(auth, id) {
+export async function GetUser(auth, config, id) {
   const sheets = google.sheets({ version: "v4", auth });
 
   try {
@@ -59,7 +59,7 @@ export async function GetUser(auth, id) {
 
     const sheetsData = res.data.values;
   
-    const ID_COLUMN_NUMBER = findHeaderColumnNumber(sheetsData, config.ID_HEADER_NAME);
+    const ID_COLUMN_NUMBER = findHeaderColumnNumber(config, sheetsData, config.ID_HEADER_NAME);
 
     for (let x = 0; x < sheetsData.length; x++) {
       if (x === config.HEADER_ROW) continue;
