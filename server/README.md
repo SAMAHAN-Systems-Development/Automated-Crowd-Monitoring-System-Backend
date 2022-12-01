@@ -5,7 +5,7 @@
 Send REST API requests to
 
 ```
-sysdev-acms-api.herokuapp.com/{URI}
+https://sysdev-acms-api.onrender.com/{URI}
 ```
 
 ## URIs
