@@ -5,7 +5,7 @@
 Send REST API requests to
 
 ```
-https://sysdev-acms-api.onrender.com/{URI}
+https://sysdev-acms-api.onrender.com/{URI}{config}
 ```
 
 ## URIs
@@ -95,6 +95,10 @@ POST
 <td>
 <pre>
 id: string | number
+/*
+Add whatever property you want.
+Each property is considered as a cell value.
+*/
 </pre>
 </td>
 <td>
@@ -102,3 +106,31 @@ Adds an entry to log
 </td>
 </tr>
 </table>
+
+## REQURED CONFIGS
+Pass the follwing as a URL query every time you send a request to the API.
+```javascript
+{
+  ID_LENGTH: 10, // THE LENGTH OF NANO ID
+  SPREADSHEET_ID: "1faXrVd9NiO8TX-uxm6EalPeJ-1HrtXyjvxgiKaIU3pg", // FOUND IN LINK
+  SHEET_NAME: "Registration", // NAME OF THE SHEET
+  STARTING_ROW: 2, // THE CELL THAT CONTAINS THE FIRST VALUE ASIDE FROM HEADER
+  HEADER_ROW: 0, // THE ROW THAT CONTAINS ALL THE HEADER NAMES
+
+  // SHEET STRUCTURE
+  ID_HEADER_NAME: "GENERATED ID",
+  ID_COLUMN: "E",
+
+  EMAIL_HEADER_NAME: "EMAIL", 
+  EMAIL_COLUMN: "D",
+
+  ENTERED_HEADER_NAME: "ENTERED",
+  ENTERED_COLUMN: "F",
+
+  SENT_HEADER_NAME: "EMAIL SENT", 
+  SENT_COLUMN: "G",
+
+  // FOR LOG
+  LOG_SHEET_NAME: "Log"
+}
+```

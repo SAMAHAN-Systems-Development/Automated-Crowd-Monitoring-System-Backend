@@ -1,7 +1,7 @@
 import { google } from "googleapis";
-import config from "../configuration.js";
+// import config from "../configuration.js";
 
-function findHeaderColumnNumber(sheetsData, headerName) {
+function findHeaderColumnNumber(config, sheetsData, headerName) {
   for (let index = 0; index < sheetsData[config.HEADER_ROW].length; index++) {
     if (sheetsData[config.HEADER_ROW][index] === headerName) {
       return index;
@@ -10,7 +10,7 @@ function findHeaderColumnNumber(sheetsData, headerName) {
   return undefined;
 }
 
-export async function UpdateEnteredStatus(auth, id, entered) {
+export async function UpdateEnteredStatus(auth, config, id, entered) {
   const sheets = google.sheets({ version: "v4", auth });
 
   try {
@@ -23,6 +23,7 @@ export async function UpdateEnteredStatus(auth, id, entered) {
     const sheetsData = res.data.values;
 
     const ID_COLUMN_NUMBER = findHeaderColumnNumber(
+      config,
       sheetsData,
       config.ID_HEADER_NAME
     );
@@ -54,7 +55,7 @@ export async function UpdateEnteredStatus(auth, id, entered) {
   }
 }
 
-export async function AddToLog(auth, data) {
+export async function AddToLog(auth, config, data) {
   const sheets = google.sheets({ version: "v4", auth });
   try {
     let entries = [new Date()];
