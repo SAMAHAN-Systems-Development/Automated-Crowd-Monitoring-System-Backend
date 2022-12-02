@@ -8,7 +8,6 @@ import {
   GetUser,
   UpdateEnteredStatus,
   AddToLog,
-  // Email,
 } from "./utilities/UtilitiesIndex.js";
 import { SendEmail } from "./EmailSender/EmailSender.js";
 
@@ -75,7 +74,12 @@ app.put("/api/users/:id", async (req, res) => {
   try {
     const auth = await Authorize();
 
-    const result = await UpdateEnteredStatus(auth, config, req.params.id, entered);
+    const result = await UpdateEnteredStatus(
+      auth,
+      config,
+      req.params.id,
+      entered
+    );
 
     // IF USER IS NOT FOUND
     if (result === null) {
@@ -127,14 +131,14 @@ app.post(`/api/send-email`, async (req, res) => {
 
     res.status(200).json(result);
   } catch (error) {
-    if (error === "UserNotFound") {
+    if (error === "UsersNotFound") {
       res.status(404).json({ msg: error });
       return;
     }
 
     res.status(400).json({ msg: error });
   }
-})
+});
 
 app.listen(app.get("port"), () => {
   console.log("SERVER ON PORT", app.get("port"));

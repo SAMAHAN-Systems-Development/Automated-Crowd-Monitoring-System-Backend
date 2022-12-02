@@ -1,12 +1,12 @@
 import nodemailer from "nodemailer";
 import config from "./config.js";
-
 import * as dotenv from "dotenv";
-import { Authorize, GetUsers } from "../utilities/UtilitiesIndex.js";
 import path from "path";
+import { Authorize, SetToEmailSent } from "../utilities/UtilitiesIndex.js";
 
 export async function SendEmail(sheetConfiguration, users) {
   dotenv.config({ path: path.join(process.cwd(), "EmailSender/.env") });
+  const auth = await Authorize();
 
   try {
     let transporter = nodemailer.createTransport({
@@ -23,7 +23,6 @@ export async function SendEmail(sheetConfiguration, users) {
     if (users !== undefined) {
       for (let user of users) {
         if (user[sheetConfiguration.SENT_HEADER_NAME] == "FALSE") {
-          // if (SetToEmailSent(auth, user)) {                                  no working SetToEmailSent function yet kay gibago
           let mailOptions = {
             from: `"${config.name}" <${config.user}>`,
             to: user.EMAIL,
@@ -34,6 +33,7 @@ export async function SendEmail(sheetConfiguration, users) {
             if (error) {
               console.log(error);
             } else {
+              SetToEmailSent(auth, sheetConfiguration, user["GENERATED ID"]);
               console.log(`Sent to ${user.EMAIL}`);
             }
           });
@@ -202,4 +202,3 @@ function getHTML(user) {
 
   `;
 }
-

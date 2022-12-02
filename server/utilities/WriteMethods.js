@@ -83,74 +83,47 @@ export async function AddToLog(auth, config, data) {
   }
 }
 
-export async function SetToEmailSent(auth, user) {
-  //new function | to fix
+export async function SetToEmailSent(auth, config, id) {
   const sheets = google.sheets({ version: "v4", auth });
-  console.log(user);
 
-  // try {
-  //   // GET TOTAL NUMBER OF ROWS IN THE SHEET
-  //   const res = await sheets.spreadsheets.values.get({
-  //     spreadsheetId: config.SPREADSHEET_ID,
-  //     range: `'${config.SHEET_NAME}'`,
-  //   });
+  try {
+    // GET TOTAL NUMBER OF ROWS IN THE SHEET
+    const res = await sheets.spreadsheets.values.get({
+      spreadsheetId: config.SPREADSHEET_ID,
+      range: `'${config.SHEET_NAME}'`,
+    });
 
-  //   const sheetsData = res.data.values;
+    const sheetsData = res.data.values;
 
-  //   const ID_COLUMN_NUMBER = findHeaderColumnNumber(
-  //     sheetsData,
-  //     config.ID_HEADER_NAME
-  //   );
+    const ID_COLUMN_NUMBER = findHeaderColumnNumber(
+      config,
+      sheetsData,
+      config.ID_HEADER_NAME
+    );
 
-  //   for (let x = 0; x < sheetsData.length; x++) {
-  //     if (x === config.HEADER_ROW) continue;
+    for (let x = 0; x < sheetsData.length; x++) {
+      if (x === config.HEADER_ROW) continue;
 
-  //     // IF CODE OF USER MATCHES, MARK AS PRESENT
-  //     if (sheetsData[x][ID_COLUMN_NUMBER] === id) {
-  //       const writeOptions = {
-  //         spreadsheetId: config.SPREADSHEET_ID,
-  //         range: `'${config.SHEET_NAME}'!${config.ENTERED_COLUMN}${x + 1}:${
-  //           config.ENTERED_COLUMN
-  //         }${x + 1}`,
-  //         resource: { values: [[entered]] },
-  //         valueInputOption: "USER_ENTERED",
-  //       };
+      // IF CODE OF USER MATCHES, MARK AS PRESENT
+      if (sheetsData[x][ID_COLUMN_NUMBER] === id) {
+        const writeOptions = {
+          spreadsheetId: config.SPREADSHEET_ID,
+          range: `'${config.SHEET_NAME}'!${config.SENT_COLUMN}${x + 1}:${
+            config.SENT_COLUMN
+          }${x + 1}`,
+          resource: { values: [["TRUE"]] },
+          valueInputOption: "USER_ENTERED",
+        };
 
-  //       const result = await sheets.spreadsheets.values.update(writeOptions);
+        const result = await sheets.spreadsheets.values.update(writeOptions);
 
-  //       return result.data;
-  //     }
-  //   }
+        return result.data;
+      }
+    }
 
-  //   // IF USER NOT FOUND
-  //   return null;
-  // } catch (error) {
-  //   return error;
-  // }
+    // IF USER NOT FOUND
+    return null;
+  } catch (error) {
+    return error;
+  }
 }
-
-// export async function SetToEmailSent(auth, user) {                         old function
-//   if (user[config.ID_HEADER_NAME].length > 0) {
-//     const sheets = google.sheets({ version: "v4", auth });
-//     let row = await GetRowFromCode(auth, user.code);
-//     try {
-//       const updateOptions = {
-//         spreadsheetId: config.SPREADSHEET_ID,
-//         range: `'${config.SHEET_NAME}'!${config.SENT_COLUMN}${row}`,
-//         valueInputOption: "USER_ENTERED",
-//         resource: {
-//           values: [["TRUE"]],
-//         },
-//       };
-
-//       // let res = await sheets.spreadsheets.values.update(updateOptions);
-//       // console.log(res);
-//       await sheets.spreadsheets.values.update(updateOptions);
-//       return true;
-//     } catch (error) {
-//       console.log(error);
-//       return false;
-//     }
-//   }
-//   return false;
-// }
