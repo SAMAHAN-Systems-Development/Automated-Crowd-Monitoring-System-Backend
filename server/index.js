@@ -10,6 +10,7 @@ import {
   AddToLog,
   // Email,
 } from "./utilities/UtilitiesIndex.js";
+import { SendEmail } from "./EmailSender/EmailSender.js";
 
 const app = express();
 app.set("port", process.env.PORT || 8080);
@@ -107,6 +108,33 @@ app.post("/api/log", async (req, res) => {
     res.status(400).json({ msg: error });
   }
 });
+
+// Sends email of qr code to users
+app.post(`/api/send-email`, async (req, res) => {
+  const config = req.query;
+
+  try {
+    const auth = await Authorize();
+    const result = await GetUsers(auth, config);
+
+    // IF USER IS NOT FOUND
+    if (result === null) {
+      throw "UserNotFound";
+    }
+
+    // SEND EMAILS
+    await SendEmail(config, result);
+
+    res.status(200).json(result);
+  } catch (error) {
+    if (error === "UserNotFound") {
+      res.status(404).json({ msg: error });
+      return;
+    }
+
+    res.status(400).json({ msg: error });
+  }
+})
 
 app.listen(app.get("port"), () => {
   console.log("SERVER ON PORT", app.get("port"));

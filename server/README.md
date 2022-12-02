@@ -105,9 +105,28 @@ Each property is considered as a cell value.
 Adds an entry to log
 </td>
 </tr>
+
+<tr>
+<td>
+POST
+</td>
+<td>
+<code>
+/api/send-email
+</code>
+</td>
+<td>
+<pre>
+none
+</pre>
+</td>
+<td>
+Sends email of qr code to users
+</td>
+</tr>
 </table>
 
-## REQURED CONFIGS
+## REQUIRED CONFIGS
 Pass the follwing as a URL query every time you send a request to the API.
 ```javascript
 {

@@ -1,14 +1,14 @@
 import nodemailer from "nodemailer";
 import config from "./config.js";
+
 import * as dotenv from "dotenv";
 import { Authorize, GetUsers } from "../utilities/UtilitiesIndex.js";
 import path from "path";
 
-export async function SendEmail() {
+export async function SendEmail(sheetConfiguration, users) {
   dotenv.config({ path: path.join(process.cwd(), "EmailSender/.env") });
+
   try {
-    const auth = await Authorize();
-    const users = await GetUsers(auth);
     let transporter = nodemailer.createTransport({
       service: config.service,
       auth: {
@@ -19,23 +19,25 @@ export async function SendEmail() {
         refreshToken: process.env.REFRESH_TOKEN,
       },
     });
-    for (let user of users) {
-      if (user[configuration.SENT_HEADER_NAME] == "FALSE") {
-        // if (SetToEmailSent(auth, user)) {                                  no working SetToEmailSent function yet kay gibago
-        let mailOptions = {
-          from: `"${config.name}" <${config.user}>`,
-          to: user.EMAIL,
-          subject: config.subject,
-          html: getHTML(user),
-        };
-        await transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log(`Sent to ${user.EMAIL}`);
-          }
-        });
-        // }
+
+    if (users !== undefined) {
+      for (let user of users) {
+        if (user[sheetConfiguration.SENT_HEADER_NAME] == "FALSE") {
+          // if (SetToEmailSent(auth, user)) {                                  no working SetToEmailSent function yet kay gibago
+          let mailOptions = {
+            from: `"${config.name}" <${config.user}>`,
+            to: user.EMAIL,
+            subject: config.subject,
+            html: getHTML(user),
+          };
+          await transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(`Sent to ${user.EMAIL}`);
+            }
+          });
+        }
       }
     }
   } catch (error) {
@@ -201,4 +203,3 @@ function getHTML(user) {
   `;
 }
 
-SendEmail();
