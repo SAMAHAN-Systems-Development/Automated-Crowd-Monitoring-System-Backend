@@ -123,7 +123,7 @@ app.post(`/api/send-email`, async (req, res) => {
 
     // IF USER IS NOT FOUND
     if (result === null) {
-      throw "UserNotFound";
+      throw "UsersNotFound";
     }
 
     // SEND EMAILS

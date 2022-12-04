@@ -26,15 +26,15 @@ export async function SendEmail(sheetConfiguration, users) {
           let mailOptions = {
             from: `"${config.name}" <${config.user}>`,
             to: user.EMAIL,
-            subject: config.subject,
-            html: getHTML(user),
+            subject: sheetConfiguration.SUBJECT,
+            html: getHTML(user, sheetConfiguration.EVENT),
           };
           await transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
               console.log(error);
             } else {
-              SetToEmailSent(auth, sheetConfiguration, user["GENERATED ID"]);
               console.log(`Sent to ${user.EMAIL}`);
+              SetToEmailSent(auth, sheetConfiguration, user["GENERATED ID"]);
             }
           });
         }
@@ -45,7 +45,7 @@ export async function SendEmail(sheetConfiguration, users) {
   }
 }
 
-function getHTML(user) {
+function getHTML(user, event) {
   return `
   <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -126,7 +126,7 @@ function getHTML(user) {
               </tr>
               <tr>
                 <td class="letter-body" style="padding: 0">
-                  In mollit velit exercitation commodo veniam. Laborum ex
+                  In <strong>${event}</strong> velit exercitation commodo veniam. Laborum ex
                   laboris consequat consectetur velit anim nulla occaecat ut
                   occaecat dolore aute excepteur in. Dolore consequat aliqua ut
                   adipisicing excepteur adipisicing adipisicing sint. Incididunt

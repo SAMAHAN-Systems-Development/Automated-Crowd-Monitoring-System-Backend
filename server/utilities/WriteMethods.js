@@ -1,5 +1,4 @@
 import { google } from "googleapis";
-// import config from "../configuration.js";
 
 function findHeaderColumnNumber(config, sheetsData, headerName) {
   for (let index = 0; index < sheetsData[config.HEADER_ROW].length; index++) {

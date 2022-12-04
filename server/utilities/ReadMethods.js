@@ -37,7 +37,7 @@ export async function GetUsers(auth, config) {
       for (let y = 0; y < sheetsData[config.HEADER_ROW].length; y++) {
         user[headers[y]] = sheetsData[x][y];
       }
-      
+
       users.push(user);
     }
 
@@ -58,8 +58,12 @@ export async function GetUser(auth, config, id) {
     });
 
     const sheetsData = res.data.values;
-  
-    const ID_COLUMN_NUMBER = findHeaderColumnNumber(config, sheetsData, config.ID_HEADER_NAME);
+
+    const ID_COLUMN_NUMBER = findHeaderColumnNumber(
+      config,
+      sheetsData,
+      config.ID_HEADER_NAME
+    );
 
     for (let x = 0; x < sheetsData.length; x++) {
       if (x === config.HEADER_ROW) continue;
@@ -76,8 +80,7 @@ export async function GetUser(auth, config, id) {
 
     // IF USER NOT FOUND
     return null;
-  }
-  catch (error) {
+  } catch (error) {
     return error;
   }
 }
