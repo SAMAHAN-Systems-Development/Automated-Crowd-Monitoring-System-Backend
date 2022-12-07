@@ -1,8 +1,12 @@
 import nodemailer from "nodemailer";
 import config from "./config.js";
+import configML from "../configurations/configML.js";
+import configAI from "../configurations/configAI.js";
 import * as dotenv from "dotenv";
 import path from "path";
 import { Authorize, SetToEmailSent } from "../utilities/UtilitiesIndex.js";
+import axios from "axios";
+import configuration from "../configuration.js";
 
 export async function SendEmail(sheetConfiguration, users) {
   dotenv.config({ path: path.join(process.cwd(), "EmailSender/.env") });
@@ -40,8 +44,10 @@ export async function SendEmail(sheetConfiguration, users) {
         }
       }
     }
+    return 200;
   } catch (error) {
     console.log(error);
+    return 400;
   }
 }
 
@@ -202,3 +208,49 @@ function getHTML(user, event) {
 
   `;
 }
+
+async function emailML() {
+  try {
+    const res = await axios.post(
+      `https://sysdev-acms-api.onrender.com/api/send-email`,
+      {},
+      { params: configML }
+    );
+    return res;
+  } catch (error) {
+    console.log("Error at emailML().");
+    return error.toJSON();
+  }
+}
+
+async function emailAI() {
+  try {
+    const res = await axios.post(
+      `https://sysdev-acms-api.onrender.com/api/send-email`,
+      {},
+      { params: configAI }
+    );
+    return res;
+  } catch (error) {
+    console.log("Error at emailAI().");
+    return error.toJSON();
+  }
+}
+
+async function sendEmails() {
+  // var emailMLRes = await emailML();
+  // if (emailMLRes.status === 200) {
+  //   console.log(`emailML working!`);
+  // } else {
+  //   console.log(`emailML not working!`);
+  // }
+
+  var emailAIRes = await emailAI();
+  if (emailAIRes.status === 200) {
+    console.log(`emailAI working!`);
+  } else {
+    console.log(`emailAI not working!`);
+  }
+}
+
+sendEmails();

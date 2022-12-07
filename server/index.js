@@ -127,13 +127,19 @@ app.post(`/api/send-email`, async (req, res) => {
     }
 
     // SEND EMAILS
-    await SendEmail(config, result);
+    var sendEmailStatus = await SendEmail(config, result);
+
+    if (sendEmailStatus !== 200) {
+      throw "EmailError";
+    }
 
     res.status(200).json(result);
   } catch (error) {
     if (error === "UsersNotFound") {
       res.status(404).json({ msg: error });
       return;
+    } else if (error === "EmailError") {
+      res.status(400).json({ msg: error });
     }
 
     res.status(400).json({ msg: error });
