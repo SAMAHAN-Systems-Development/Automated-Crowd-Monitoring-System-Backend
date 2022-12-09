@@ -1,3 +1,4 @@
+export { default as GenerateIDs } from './GenerateIDs.js';
 export { GetUsers, GetUser } from "./ReadMethods.js";
 export {
   UpdateEnteredStatus,

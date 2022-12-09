@@ -8,6 +8,7 @@ import {
   GetUser,
   UpdateEnteredStatus,
   AddToLog,
+  GenerateIDs,
 } from "./utilities/UtilitiesIndex.js";
 import { SendEmail } from "./EmailSender/EmailSender.js";
 
@@ -29,6 +30,20 @@ app.get("/", async (req, res) => {
     res.status(400).json({ msg: error });
   }
 });
+
+app.get("/api/generate-ids", async (req, res) => {
+  const config = req.query;
+
+  try {
+    const auth = await Authorize();
+    const generate = await GenerateIDs(auth, config);
+
+    res.status(200).json({msg: generate});
+  }
+  catch (error) {
+    res.status(400).json({ msg: error });
+  }
+})
 
 app.get("/api/users", async (req, res) => {
   const config = req.query;

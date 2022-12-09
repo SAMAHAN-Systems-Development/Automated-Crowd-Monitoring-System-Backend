@@ -1,6 +1,7 @@
 node_modules
 
 # LOCAL FILES
+configuration.js
 credentials*.json
 token.json
 *.env
